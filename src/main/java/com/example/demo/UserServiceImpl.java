@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserEntity getUserById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Note not found"));
+    public Optional<UserEntity> getUserById(Long id) {
+        return repository.findById(id);
     }
 
     @Override
@@ -36,7 +36,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity updateUser(Long id, UserEntity user) {
-        UserEntity us = getUserById(id);
+        Optional<UserEntity> obj = getUserById(id);
+        UserEntity us = obj.get();
 
         us.setSurname(user.getSurname());
         us.setName(user.getName());
